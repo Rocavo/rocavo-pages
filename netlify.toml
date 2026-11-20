@@ -1,0 +1,4 @@
+# Static site: no build step. Everything under public/ is served as is.
+[build]
+  publish = "public"
+  command = ""
