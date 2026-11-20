@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>HIPAA fee schedule page builder for patient records copies (45 CFR 164.525)</title>
+<meta name="description" content="Build the fee schedule the 2026 HIPAA Privacy Rule requires practices that charge for copies of records to post: free types of access and your standard fees. You type your own fees. Free, runs in your browser.">
+<link rel="canonical" href="https://rocavo-pages.netlify.app/hipaa-fee-schedule-builder/">
+<link rel="stylesheet" href="../site.css">
+</head>
+<body>
+<header class="site"><a href="../">Rocavo tools</a></header>
+<main>
+<h1>HIPAA fee schedule page builder</h1>
+<p class="lead">If your practice charges for copies of health records, a new federal rule requires you to post a fee schedule. Fill in your own fees below and this page writes the schedule for your website and a version to print for the front desk.</p>
+<p>The requirement is new section 45 CFR 164.525, part of a final rule published on November 19, 2026. Practices must comply by July 19, 2027.</p>
+
+<div class="note noprint"><strong>This page never suggests a fee.</strong> Every amount is one you type. Under HIPAA a fee charged to a patient for a copy of their own records must be reasonable and cost-based and may include only the costs the rule lists (see "What the rule says" below). State law may limit fees further or forbid them.</div>
+
+<div class="card noprint">
+  <label for="practice">Practice name</label>
+  <input type="text" id="practice" autocomplete="off">
+  <label for="updated">Schedule as of (date, in words)</label>
+  <input type="text" id="updated" autocomplete="off">
+  <label for="contact">Who to contact about fees (optional)</label>
+  <input type="text" id="contact" autocomplete="off">
+
+  <h3>1. Access that is free of charge</h3>
+  <p class="muted">The rule says the schedule must list all types of access available free of charge. These two may not carry a fee under the rule and are always included:</p>
+  <ul id="free-fixed"></ul>
+  <label for="extra-free">Other access you give free of charge, one per line (optional)</label>
+  <textarea id="extra-free" autocomplete="off"></textarea>
+
+  <h3>2. Your standard fees for copies of a patient's own records</h3>
+  <p class="muted">Copies given to the patient, or sent to a person or organization the patient names. Fill in a fee only for the kinds of copy you generally charge for. Rows left without a fee are left out. Change, add or remove rows to match the forms and formats you offer.</p>
+  <table id="patient-table" class="edit"><thead><tr><th>Type of copy</th><th>Your standard fee</th><th></th></tr></thead><tbody></tbody></table>
+  <button type="button" class="secondary small" id="add-patient">Add a row</button>
+
+  <h3>3. Your standard fees for copies sent with the patient's written authorization</h3>
+  <p class="muted">Copies disclosed to someone else under a signed authorization (45 CFR 164.508), where you generally charge for them.</p>
+  <table id="auth-table" class="edit"><thead><tr><th>Type of copy</th><th>Your standard fee</th><th></th></tr></thead><tbody></tbody></table>
+  <button type="button" class="secondary small" id="add-auth">Add a row</button>
+
+  <h3>4. How the total fee is worked out (optional)</h3>
+  <p class="muted">The rule's preamble expects the schedule to show how the charges above are used to work out the total fee, for example that they are added together. Write this in your own words.</p>
+  <label for="how-total">How the total fee is worked out</label>
+  <textarea id="how-total" autocomplete="off"></textarea>
+
+  <h3>5. Sections where you entered no fee</h3>
+  <p class="muted">If you leave a fee table empty, the schedule will say that you do not charge for those copies. Tick to confirm that is what you mean.</p>
+  <p><input type="checkbox" id="free-patient"> <label for="free-patient" style="display:inline;font-weight:400">We do not charge for copies of a patient's own records.</label></p>
+  <p><input type="checkbox" id="free-auth"> <label for="free-auth" style="display:inline;font-weight:400">We do not charge for copies sent with the patient's written authorization.</label></p>
+
+  <div><button type="button" id="build">Build the fee schedule</button></div>
+  <p class="error" id="build-error" role="alert" hidden></p>
+  <p class="muted">Nothing you enter leaves your browser. This page does not ask for, send or store any patient information.</p>
+</div>
+
+<div id="out" class="printable" hidden>
+  <h2 class="noprint">Your fee schedule</h2>
+  <p class="note noprint" id="warn" hidden></p>
+  <div class="card result printout" id="preview"></div>
+  <div class="noprint">
+    <button type="button" id="print">Print for the front desk</button>
+    <button type="button" class="secondary" id="copy-html">Copy as HTML for your website</button>
+    <button type="button" class="secondary" id="copy-text">Copy as plain text</button>
+    <span class="muted" id="copied" hidden>Copied.</span>
+    <h3>HTML to paste into a page on your website</h3>
+    <pre class="code" id="code"></pre>
+  </div>
+</div>
+
+<h2>What the rule says</h2>
+<ul>
+  <li><strong>Who must post.</strong> "If a covered entity imposes fees for copies of protected health information requested under this subpart, the covered entity must post a fee schedule on its website, if it has one, and make the fee schedule available to individuals at the point of service and upon request." (45 CFR 164.525). A practice that charges nothing for copies is not given a posting duty by this section.</li>
+  <li><strong>What it must list.</strong> "All types of access to protected health information available free of charge", and "Standard fees" for copies provided to the individual or sent where the individual directs (45 CFR 164.524(a) and (d)), for all available electronic and non-electronic forms and formats, and for copies disclosed under the individual's authorization (45 CFR 164.508), where the practice generally charges for them.</li>
+  <li><strong>What "standard fees" means.</strong> The rule's preamble describes them as the charges for the components of a fee (labor, supplies, postage, preparing a summary) "and how the covered entity uses those charges to determine the total fee", and says labor may be shown as an hourly charge.</li>
+  <li><strong>What a fee to a patient may include.</strong> Only the cost of labor for copying, supplies for a non-electronic copy, postage when the patient asks for a non-electronic copy or summary to be mailed, and labor for preparing a summary or explanation the patient agreed to (45 CFR 164.524(c)(4)(i), as amended). The preamble says the rule does not address what may be charged for copies sent to a person the patient designates.</li>
+  <li><strong>What must be free.</strong> No fee when a patient inspects their own information, or gets electronic information held by the practice "using an internet-based method, such as a personal health application" (45 CFR 164.524(c)(4)(ii), as amended).</li>
+</ul>
+
+<h2>What this page does not cover</h2>
+<ul>
+  <li>What your fees should be, or whether a fee is reasonable and cost-based.</li>
+  <li>State law. States may cap or forbid these fees, and the stricter limit applies to you. The preamble says other laws "may limit such fees even further".</li>
+  <li>Your Notice of Privacy Practices, which the same rule also changes.</li>
+  <li>Fees for anything other than copies of health records.</li>
+</ul>
+<div class="note"><strong>This is not legal advice.</strong> Have the finished schedule checked against the rule and your state's law before you post it.</div>
+
+<h2>Want the full pack?</h2>
+<p>We are deciding whether to build a one-time download for small practices: extension and denial letters, a request log you keep on your own computer, a one-page staff procedure and a checklist of the rule's changes. If you would want it, <a id="notify" href="mailto:hello@rocavo.com?subject=Tell%20me%20when%20the%20HIPAA%20access%20pack%20is%20ready&amp;body=Please%20tell%20me%20when%20the%20pack%20is%20ready.">email us and we will tell you when the pack is ready</a>. We use your address for that one message and nothing else. If we decide not to build it, you will not hear from us (<a href="../privacy.html">privacy note</a>).</p>
+<p>Also free: the <a href="../hipaa-records-request-deadline/">records request deadline calculator</a> for the new 15-calendar-day limit.</p>
+
+<h2>Sources</h2>
+<ul>
+  <li>U.S. Department of Health and Human Services, "HIPAA Privacy Rule: Changes to Support Coordinated Care and Individual Engagement and Reduce Regulatory Burdens", final rule, 91 FR 74848 (November 19, 2026), FR Doc. 2026-23429: <a href="https://www.govinfo.gov/content/pkg/FR-2026-11-19/pdf/2026-23429.pdf" rel="nofollow">Federal Register (PDF, govinfo.gov)</a>. Read November 19, 2026: the text of 45 CFR 164.525 and 164.524(c)(4), and the preamble's discussion of the fee schedule.</li>
+  <li>HHS, <a href="https://www.hhs.gov/hipaa/for-professionals/privacy/changes-support-coordinated-care-individual-engagement-reduce-regulatory-burdens-final-rule.html" rel="nofollow">fact sheet on the final rule</a>. Read November 19, 2026.</li>
+</ul>
+<p class="muted">Page last checked against the sources: November 19, 2026.</p>
+</main>
+<footer class="site">
+  <p>Published by Rocavo Inc., 175 Baypointe Parkway, San Jose, CA. Contact: <a href="mailto:hello@rocavo.com">hello@rocavo.com</a>. <a href="../privacy.html">Privacy note</a>. Rocavo is not a law firm and is not affiliated with HHS.</p>
+</footer>
+<script src="builder.js"></script>
+<script>
+(function () {
+  var F = window.FeeSchedule, $ = function (id) { return document.getElementById(id); };
+  function el(tag, text, cls) { var e = document.createElement(tag); if (text != null) e.textContent = text; if (cls) e.className = cls; return e; }
+  F.FREE_BY_RULE.forEach(function (t) { $('free-fixed').appendChild(el('li', t)); });
+  function addRow(tableId, label) {
+    var tr = document.createElement('tr'), a = document.createElement('td'), b = document.createElement('td'), c = document.createElement('td');
+    var what = document.createElement('input'); what.type = 'text'; what.value = label || ''; what.setAttribute('aria-label', 'Type of copy'); what.placeholder = 'Type of copy';
+    var fee = document.createElement('input'); fee.type = 'text'; fee.setAttribute('aria-label', 'Your standard fee'); fee.placeholder = 'Your standard fee'; fee.autocomplete = 'off';
+    var rm = el('button', 'Remove', 'secondary small'); rm.type = 'button'; rm.addEventListener('click', function () { tr.remove(); });
+    a.appendChild(what); b.appendChild(fee); c.appendChild(rm); tr.appendChild(a); tr.appendChild(b); tr.appendChild(c);
+    $(tableId).tBodies[0].appendChild(tr);
+  }
+  F.PATIENT_ROWS.forEach(function (l) { addRow('patient-table', l); });
+  F.AUTH_ROWS.forEach(function (l) { addRow('auth-table', l); });
+  $('add-patient').addEventListener('click', function () { addRow('patient-table', ''); });
+  $('add-auth').addEventListener('click', function () { addRow('auth-table', ''); });
+  function read(tableId) {
+    return Array.prototype.map.call($(tableId).tBodies[0].rows, function (tr) { var i = tr.querySelectorAll('input'); return { what: i[0].value, fee: i[1].value }; });
+  }
+  function input() {
+    return { practice: $('practice').value, updated: $('updated').value, contact: $('contact').value,
+      extraFree: $('extra-free').value.split('\n'), patientRows: read('patient-table'), authRows: read('auth-table'),
+      howTotal: $('how-total').value, confirmFreePatient: $('free-patient').checked, confirmFreeAuth: $('free-auth').checked };
+  }
+  var last = null;
+  $('build').addEventListener('click', function () {
+    var cand = input(), chk = F.check(cand), be = $('build-error');
+    if (!chk.ok) { be.textContent = chk.errors.join(' '); be.hidden = false; $('out').hidden = true; last = null; return; }
+    be.hidden = true; last = cand;
+    var m = F.model(last), html = F.html(last), w = $('warn');
+    $('preview').innerHTML = html; // html() escapes every typed value
+    $('code').textContent = html;
+    if (!m.patient.length && !m.auth.length) { w.textContent = 'You entered no fees. If your practice does not charge for copies of records, section 164.525 does not require you to post a fee schedule.'; w.hidden = false; }
+    else { w.hidden = true; }
+    $('out').hidden = false; $('copied').hidden = true;
+    $('out').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+  function copy(t) {
+    function done() { $('copied').hidden = false; }
+    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(t).then(done, function () {});
+    else { var ta = document.createElement('textarea'); ta.value = t; document.body.appendChild(ta); ta.select(); try { document.execCommand('copy'); done(); } catch (e) {} ta.remove(); }
+  }
+  $('copy-html').addEventListener('click', function () { if (last) copy(F.html(last)); });
+  $('copy-text').addEventListener('click', function () { if (last) copy(F.text(last)); });
+  $('print').addEventListener('click', function () { document.body.classList.add('po'); window.print(); document.body.classList.remove('po'); });
+})();
+</script>
+</body>
+</html>

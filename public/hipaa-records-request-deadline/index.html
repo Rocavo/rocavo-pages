@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>HIPAA records request deadline calculator: 15 calendar days, extension date and letter</title>
+<meta name="description" content="Enter the date a patient's records request arrived. See the HIPAA due date under the 30-day limit and the new 15-calendar-day limit, the last day to give the patient the extension statement, and a letter to adapt. Free, runs in your browser.">
+<link rel="canonical" href="https://rocavo-pages.netlify.app/hipaa-records-request-deadline/">
+<link rel="stylesheet" href="../site.css">
+</head>
+<body>
+<header class="site"><a href="../">Rocavo tools</a></header>
+<main>
+<h1>HIPAA records request deadline calculator</h1>
+<p class="lead">Enter the date your practice received a patient's request for their records. The calculator shows the last day to act on it under the HIPAA Privacy Rule, the last day to give the patient an extension statement, and the latest date an extension can run to.</p>
+<p>A final rule published on November 19, 2026 shortens the federal time limit from 30 days to 15 calendar days. The rule takes effect on January 19, 2027, and practices must comply by July 19, 2027. The calculator shows the limit that matches the date you enter.</p>
+
+<div class="card noprint">
+  <label for="received">Date the request was received</label>
+  <input type="date" id="received" min="2003-04-14" max="2100-12-31" autocomplete="off">
+  <div><button type="button" id="calc">Show the dates</button></div>
+  <p class="error" id="calc-error" role="alert" hidden></p>
+  <p class="muted">Nothing you enter leaves your browser. This page does not ask for, send or store any patient information.</p>
+</div>
+
+<div id="results" hidden aria-live="polite"></div>
+
+<div id="letter-block" class="printable" hidden>
+  <h2>Extension statement</h2>
+  <p>If you cannot act within the time limit, the rule allows one extension. Within the original time limit you must provide the patient with a written statement of the reasons for the delay and the date by which you will complete your action on the request. The letter below has those two things. Write the reason yourself, and add the patient's name and address after you copy it into your own document.</p>
+  <div class="card noprint">
+    <label for="practice">Practice name and address (optional)</label>
+    <input type="text" id="practice" autocomplete="off">
+    <label for="newdate">Date by which you will act on the request</label>
+    <input type="date" id="newdate" autocomplete="off">
+    <label for="reasons">Reason for the delay (in your own words)</label>
+    <textarea id="reasons" autocomplete="off"></textarea>
+    <label for="contact">Who the patient can contact (optional)</label>
+    <input type="text" id="contact" autocomplete="off">
+    <div><button type="button" id="make-letter">Write the letter</button></div>
+    <p class="error" id="letter-error" role="alert" hidden></p>
+  </div>
+  <p class="muted" id="letter-basis"></p>
+  <div id="letter-out" class="printout" hidden>
+    <pre class="letter" id="letter"></pre>
+    <div class="noprint"><button type="button" id="copy-letter">Copy the letter</button><button type="button" class="secondary" id="print-letter">Print</button> <span class="muted" id="copied" hidden>Copied.</span></div>
+  </div>
+</div>
+
+<h2>How the dates are worked out</h2>
+<ul>
+  <li><strong>Requests received on or after July 19, 2027.</strong> The practice must act "as soon as practicable, but no later than 15 calendar days after receipt of the request" (45 CFR 164.524(b)(2)(i), as amended).</li>
+  <li><strong>How the days are counted.</strong> The rule does not say how to count the days. This calculator counts the day after receipt as day 1, so the last day is the date of receipt plus 15 days. That is the calculator's reading, not a statement in the rule. The rule's preamble says the time period "begins on the date that a covered entity receives the request", and under the strictest reading (the day of receipt as day 1) the last day would be one day earlier. Acting a day before the date shown is safe under either reading.</li>
+  <li><strong>One extension.</strong> The practice "may extend the time for such actions by no more than 30 calendar days" (164.524(b)(2)(ii)) and "may have only one such extension" (164.524(b)(2)(ii)(B)). The rule's preamble puts the total at "45 calendar days from receipt". Within the first 15 calendar days the practice must provide the patient with a written statement of the reasons for the delay and the date by which it will complete its action.</li>
+  <li><strong>Requests received before July 19, 2027.</strong> The time limit before this rule is 30 days after receipt, with one extension of no more than 30 days and the written statement due within the first 30 days (45 CFR 164.524(b)(2) before amendment). The new text takes effect on January 19, 2027, but practices are not required to comply with it until July 19, 2027, and may comply earlier.</li>
+  <li><strong>Requests received shortly before July 19, 2027.</strong> When the 30-day limit would end on or after July 19, 2027, the calculator shows both sets of dates. We searched the rule and found no statement on how a request still open on that date is treated. Acting by the earlier date meets both.</li>
+  <li><strong>Weekends and holidays.</strong> The rule counts calendar days. We found nothing in the rule that moves a time limit falling on a weekend or holiday to the next working day, so the calculator does not move it. It tells you when a date falls on a Saturday or Sunday so you can act before it.</li>
+  <li><strong>The clock does not stop.</strong> The preamble says time spent getting more information from the patient or checking their identity counts toward the 15 days. Discussing the scope or format of the request "shall not extend the time allowed" (164.524(c)(3)).</li>
+  <li><strong>15 days is the outer limit.</strong> The duty is to act as soon as practicable. Denying a request, in whole or in part, has the same time limit and needs a written denial.</li>
+</ul>
+
+<h2>What this page does not cover</h2>
+<ul>
+  <li><strong>Shorter limits in other laws.</strong> Where another federal or state law requires access in less than 15 calendar days, the rule says "that shorter time period is deemed practicable". Some states set shorter limits. This calculator shows the federal HIPAA limit only; check your state's law.</li>
+  <li>Whether a request can be denied, what a denial letter must say, and review of denials.</li>
+  <li>Requests to send an electronic copy to another person or organization. The rule gives these the same 15 calendar days and one 30-day extension, but has its own conditions that this page does not go through.</li>
+  <li>Requests handled by a business associate on your behalf (where the agreement makes the business associate responsible for responding, the preamble says the 15 calendar days begin when the business associate receives the request), fees, and the form and format of copies. For fees, see the <a href="../hipaa-fee-schedule-builder/">fee schedule page builder</a>.</li>
+  <li>Federal holidays are not marked.</li>
+</ul>
+<div class="note"><strong>This is not legal advice.</strong> It is a date calculator built from the published rule. If a deadline matters, read the rule or ask a lawyer.</div>
+
+<h2>Want the full pack?</h2>
+<p>We are deciding whether to build a one-time download for small practices: extension and denial letters, a request log you keep on your own computer, a one-page staff procedure and a checklist of the rule's changes. If you would want it, <a id="notify" href="mailto:hello@rocavo.com?subject=Tell%20me%20when%20the%20HIPAA%20access%20pack%20is%20ready&amp;body=Please%20tell%20me%20when%20the%20pack%20is%20ready.">email us and we will tell you when the pack is ready</a>. We use your address for that one message and nothing else. If we decide not to build it, you will not hear from us (<a href="../privacy.html">privacy note</a>).</p>
+
+<h2>Sources</h2>
+<ul>
+  <li>U.S. Department of Health and Human Services, "HIPAA Privacy Rule: Changes to Support Coordinated Care and Individual Engagement and Reduce Regulatory Burdens", final rule, 91 FR 74848 (November 19, 2026), FR Doc. 2026-23429: <a href="https://www.govinfo.gov/content/pkg/FR-2026-11-19/pdf/2026-23429.pdf" rel="nofollow">Federal Register (PDF, govinfo.gov)</a>. Read November 19, 2026: the dates section, the amended text of 45 CFR 164.524 and 164.525, and the preamble's discussion of timely action.</li>
+  <li>The rule's dates section: "The final rule is effective on January 19, 2027." and "Persons subject to this regulation must comply with the applicable requirements of this final rule by July 19, 2027."</li>
+  <li>45 CFR 164.524 before the amendment, as in force when read: <a href="https://www.ecfr.gov/current/title-45/subtitle-A/subchapter-C/part-164/subpart-E/section-164.524" rel="nofollow">eCFR</a>. Read November 19, 2026.</li>
+  <li>HHS, <a href="https://www.hhs.gov/hipaa/for-professionals/privacy/changes-support-coordinated-care-individual-engagement-reduce-regulatory-burdens-final-rule.html" rel="nofollow">fact sheet on the final rule</a>. Read November 19, 2026.</li>
+</ul>
+<p class="muted">Page last checked against the sources: November 19, 2026.</p>
+</main>
+<footer class="site">
+  <p>Published by Rocavo Inc., 175 Baypointe Parkway, San Jose, CA. Contact: <a href="mailto:hello@rocavo.com">hello@rocavo.com</a>. <a href="../privacy.html">Privacy note</a>. Rocavo is not a law firm and is not affiliated with HHS.</p>
+</footer>
+<script src="deadline.js"></script>
+<script>
+(function () {
+  var A = window.AccessDeadline, $ = function (id) { return document.getElementById(id); };
+  var state = null;
+  function el(tag, text, cls) { var e = document.createElement(tag); if (text != null) e.textContent = text; if (cls) e.className = cls; return e; }
+  function wk(isWeekend) { return isWeekend ? ' This is a weekend day. The rule does not move the date, so plan to act before it.' : ''; }
+  function block(title, d, intro) {
+    var card = el('div', null, 'card result');
+    card.appendChild(el('h3', title));
+    if (intro) card.appendChild(el('p', intro));
+    var dl = el('dl', null, 'dates');
+    function row(k, v, note, big) { dl.appendChild(el('dt', k)); var dd = el('dd'); dd.appendChild(el('span', v, big ? 'big' : null)); if (note) { dd.appendChild(document.createElement('br')); dd.appendChild(el('span', note, 'muted')); } dl.appendChild(dd); }
+    row('Last day to act on the request', A.formatLong(d.due), d.days + ' ' + d.unit + ' after receipt, counting the day after receipt as day 1 (see "How the days are counted" below).' + wk(d.dueIsWeekend), true);
+    row('Last day to give the patient an extension statement', A.formatLong(d.statementBy), 'Only if you need the extension. The rule says you must provide the patient with the written statement within the original time limit. If you mail it, allow time for delivery.');
+    row('Latest date an extension can run to', A.formatLong(d.extendedDue), d.totalDays + ' ' + d.unit + ' after receipt, with the one extension allowed.' + wk(d.extendedDueIsWeekend));
+    card.appendChild(dl);
+    return card;
+  }
+  function show() {
+    var r = A.compute($('received').value), out = $('results'), err = $('calc-error');
+    out.textContent = '';
+    if (!r.ok) { err.textContent = r.error; err.hidden = false; out.hidden = true; $('letter-block').hidden = true; state = null; return; }
+    err.hidden = true; state = r;
+    out.appendChild(el('h2', 'Dates for a request received ' + A.formatLong(r.received)));
+    if (r.regime === 'amended') {
+      out.appendChild(block('15-calendar-day limit', r.amended, 'This request was received on or after July 19, 2027, so the new limit applies.'));
+    } else if (r.regime === 'current') {
+      out.appendChild(block('30-day limit (may still be followed until July 19, 2027)', r.current, 'This request was received before July 19, 2027 and its 30-day limit ends before that date.'));
+      if (r.showEarly) out.appendChild(el('p', 'Practices may follow the new 15-calendar-day limit early. Under it, the last day to act would be ' + A.formatLong(r.amended.due) + '.', 'muted'));
+    } else {
+      var n = el('div', null, 'note');
+      n.appendChild(el('strong', 'This request straddles the changeover. '));
+      n.appendChild(document.createTextNode('It was received before July 19, 2027, but its 30-day limit ends on or after that date. We found no statement in the rule on how a request still open on July 19, 2027 is treated, so both sets of dates are shown. Acting by the earlier date meets both.'));
+      out.appendChild(n);
+      out.appendChild(block('15-calendar-day limit (new rule)', r.amended));
+      out.appendChild(block('30-day limit (the limit before the new rule)', r.current));
+    }
+    out.hidden = false;
+    $('letter-block').hidden = false; $('letter-out').hidden = true; $('letter-error').hidden = true;
+    $('letter-basis').textContent = 'The letter uses the ' + (r.primary.rule === 'amended' ? '15-calendar-day' : '30-day') + ' limit shown above.';
+    $('newdate').value = r.primary.extendedDue; $('newdate').min = A.addDays(r.primary.due, 1); $('newdate').max = r.primary.extendedDue;
+  }
+  function makeLetter() {
+    if (!state) return;
+    var d = state.primary, nd = $('newdate').value, c = A.checkNewDate(d, nd), err = $('letter-error');
+    if (!c.ok) { err.textContent = c.error; err.hidden = false; $('letter-out').hidden = true; return; }
+    err.hidden = true;
+    $('letter').textContent = A.letter({ dates: d, received: state.received, newDate: nd, practice: $('practice').value, reasons: $('reasons').value, contact: $('contact').value });
+    $('letter-out').hidden = false; $('copied').hidden = true;
+  }
+  $('calc').addEventListener('click', show);
+  $('received').addEventListener('keydown', function (e) { if (e.key === 'Enter') show(); });
+  $('make-letter').addEventListener('click', makeLetter);
+  $('print-letter').addEventListener('click', function () { document.body.classList.add('po'); window.print(); document.body.classList.remove('po'); });
+  $('copy-letter').addEventListener('click', function () {
+    var t = $('letter').textContent;
+    function done() { $('copied').hidden = false; }
+    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(t).then(done, function () {});
+    else { var r = document.createRange(); r.selectNodeContents($('letter')); var s = window.getSelection(); s.removeAllRanges(); s.addRange(r); try { document.execCommand('copy'); done(); } catch (e) {} }
+  });
+})();
+</script>
+</body>
+</html>
