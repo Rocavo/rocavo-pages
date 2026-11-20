@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="referrer" content="strict-origin-when-cross-origin">
 <title>HIPAA records request deadline calculator: 15 calendar days, extension date and letter</title>
 <meta name="description" content="Enter the date a patient's records request arrived. See the HIPAA due date under the 30-day limit and the new 15-calendar-day limit, the last day to give the patient the extension statement, and a letter to adapt. Free, runs in your browser.">
 <link rel="canonical" href="https://rocavo-pages.netlify.app/hipaa-records-request-deadline/">
@@ -84,11 +85,13 @@
 <footer class="site">
   <p>Published by Rocavo Inc., 175 Baypointe Parkway, San Jose, CA. Contact: <a href="mailto:hello@rocavo.com">hello@rocavo.com</a>. <a href="../privacy.html">Privacy note</a>. Rocavo is not a law firm and is not affiliated with HHS.</p>
 </footer>
+<script src="../count.js"></script>
 <script src="deadline.js"></script>
 <script>
 (function () {
   var A = window.AccessDeadline, $ = function (id) { return document.getElementById(id); };
   var state = null;
+  function count(name, label) { if (window.RocavoCount) window.RocavoCount.event(name, label); }
   function el(tag, text, cls) { var e = document.createElement(tag); if (text != null) e.textContent = text; if (cls) e.className = cls; return e; }
   function wk(isWeekend) { return isWeekend ? ' This is a weekend day. The rule does not move the date, so plan to act before it.' : ''; }
   function block(title, d, intro) {
@@ -108,6 +111,7 @@
     out.textContent = '';
     if (!r.ok) { err.textContent = r.error; err.hidden = false; out.hidden = true; $('letter-block').hidden = true; state = null; return; }
     err.hidden = true; state = r;
+    count('use-hipaa-records-request-deadline', 'Used: records request deadline calculator');
     out.appendChild(el('h2', 'Dates for a request received ' + A.formatLong(r.received)));
     if (r.regime === 'amended') {
       out.appendChild(block('15-calendar-day limit', r.amended, 'This request was received on or after July 19, 2027, so the new limit applies.'));
@@ -134,7 +138,9 @@
     err.hidden = true;
     $('letter').textContent = A.letter({ dates: d, received: state.received, newDate: nd, practice: $('practice').value, reasons: $('reasons').value, contact: $('contact').value });
     $('letter-out').hidden = false; $('copied').hidden = true;
+    count('letter-hipaa-records-request-deadline', 'Used: extension letter');
   }
+  $('notify').addEventListener('click', function () { count('notify-hipaa-records-request-deadline', 'Pack link: records request deadline calculator'); });
   $('calc').addEventListener('click', show);
   $('received').addEventListener('keydown', function (e) { if (e.key === 'Enter') show(); });
   $('make-letter').addEventListener('click', makeLetter);

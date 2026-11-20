@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="referrer" content="strict-origin-when-cross-origin">
 <title>HIPAA fee schedule page builder for patient records copies (45 CFR 164.525)</title>
 <meta name="description" content="Build the fee schedule the 2026 HIPAA Privacy Rule requires practices that charge for copies of records to post: free types of access and your standard fees. You type your own fees. Free, runs in your browser.">
 <link rel="canonical" href="https://rocavo-pages.netlify.app/hipaa-fee-schedule-builder/">
@@ -102,6 +103,7 @@
 <footer class="site">
   <p>Published by Rocavo Inc., 175 Baypointe Parkway, San Jose, CA. Contact: <a href="mailto:hello@rocavo.com">hello@rocavo.com</a>. <a href="../privacy.html">Privacy note</a>. Rocavo is not a law firm and is not affiliated with HHS.</p>
 </footer>
+<script src="../count.js"></script>
 <script src="builder.js"></script>
 <script>
 (function () {
@@ -133,6 +135,7 @@
     var cand = input(), chk = F.check(cand), be = $('build-error');
     if (!chk.ok) { be.textContent = chk.errors.join(' '); be.hidden = false; $('out').hidden = true; last = null; return; }
     be.hidden = true; last = cand;
+    if (window.RocavoCount) window.RocavoCount.event('use-hipaa-fee-schedule-builder', 'Used: fee schedule page builder');
     var m = F.model(last), html = F.html(last), w = $('warn');
     $('preview').innerHTML = html; // html() escapes every typed value
     $('code').textContent = html;
@@ -146,6 +149,7 @@
     if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(t).then(done, function () {});
     else { var ta = document.createElement('textarea'); ta.value = t; document.body.appendChild(ta); ta.select(); try { document.execCommand('copy'); done(); } catch (e) {} ta.remove(); }
   }
+  $('notify').addEventListener('click', function () { if (window.RocavoCount) window.RocavoCount.event('notify-hipaa-fee-schedule-builder', 'Pack link: fee schedule page builder'); });
   $('copy-html').addEventListener('click', function () { if (last) copy(F.html(last)); });
   $('copy-text').addEventListener('click', function () { if (last) copy(F.text(last)); });
   $('print').addEventListener('click', function () { document.body.classList.add('po'); window.print(); document.body.classList.remove('po'); });

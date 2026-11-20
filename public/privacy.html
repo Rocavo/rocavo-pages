@@ -3,8 +3,9 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="referrer" content="strict-origin-when-cross-origin">
 <title>Privacy note | Rocavo tools</title>
-<meta name="description" content="What the free Rocavo tools pages collect: no accounts, no cookies of ours, and nothing you type into a tool is sent to us.">
+<meta name="description" content="What the free Rocavo tools pages collect: no accounts, no cookies of ours, a cookieless count of page views and tool uses, and nothing you type into a tool is sent to anyone.">
 <link rel="stylesheet" href="site.css">
 </head>
 <body>
@@ -17,24 +18,36 @@
 <p>The tools run in your browser. What you type into them is not sent to us or to anyone else, and we do not save it. Please do not type patient or customer details into a tool unless the tool asks for them; none of the tools here do.</p>
 
 <h2>Accounts, cookies and tracking</h2>
-<p>There are no accounts and nothing to sign in to. Our pages set no cookies. We put no advertising and no analytics or tracking scripts on them. The one thing on the pages that is not ours is our host's badge, described below.</p>
+<p>There are no accounts and nothing to sign in to. Our pages set no cookies and keep nothing in your browser's storage. We put no advertising on them. We count page views and uses of the tools with a small script of our own, described under "How we count use of the site" below. The one thing on the pages that is not ours is our host's badge, described below.</p>
 
 <h2>Our hosting provider</h2>
 <p>The site is hosted by Netlify, Inc. As with any website, the host's servers receive your IP address and the details your browser sends with each request (such as the page asked for and the browser type) in order to deliver the page and keep the service secure. We do not use that information to identify you.</p>
 <p>The site is on Netlify's free plan, and Netlify may add a small "Powered by Netlify" badge to the pages, using a script of its own that it inserts as it serves each page. The badge promotes Netlify. It has links, and a box you can type in, that take you to Netlify's own website if you use them; what happens there is covered by Netlify's privacy policy, not by this note. Netlify's documentation says the badge itself makes no network requests, sets no cookies and collects no data, and that if you hide it, that choice is kept in your browser's local storage on this site. We read the badge's script on November 19, 2026 and found nothing in it that reads what you type into a tool or that sends anything anywhere unless you use its links or its box.</p>
 
 <h2>How we count use of the site</h2>
-<p>We see how often our pages appear in Google Search and how often they are clicked there, through Google Search Console. Those are totals; they do not identify anyone.</p>
+<p>Since November 20, 2026 we count how many times each page is viewed and how many visits use each tool, so that we know which tools are worth improving. The counting is done by GoatCounter (goatcounter.com), a web statistics service operated by Martin Tournoij in Ireland. We do not use GoatCounter's script; a short script that we wrote ourselves (<a href="count.js">count.js</a>, which you can read) sends the count.</p>
+<p>When you open a page, and the first time on that page that a tool gives you a result or that you select the "email us" link about a fuller version, your browser sends one small request to GoatCounter. The request carries only:</p>
+<ul>
+  <li>the address of the page on this site, without anything after a question mark, and the page's title; or, for a use of a tool or of the "email us" link, a fixed name and label that we wrote, such as "use-hipaa-records-request-deadline", and a mark that says it is an event;</li>
+  <li>if you came from a link on another website, that website's name only (for example "www.google.com"), not the page you were on or what you searched for;</li>
+  <li>a marker if your browser says it is being run by automated software, so that the visit is not counted;</li>
+  <li>a few random characters, new each time, so that the request is not answered from a cache. They do not identify you or your browser.</li>
+</ul>
+<p>It never carries anything you type into a tool: our script does not read the tools' fields. It sets no cookie and stores nothing in your browser.</p>
+<p>As with any request, GoatCounter's servers receive your IP address and the details your browser sends (such as the browser type and preferred language). GoatCounter's privacy policy, which we read on November 20, 2026, says that it does not store IP addresses or the full browser identification, that it keeps them in memory for up to 8 hours to tell repeated views in one visit apart, and that, as we have it set up, it stores totals such as pages viewed, referring sites, browser and system type, language and country (worked out from the IP address). It says that its data is stored on servers in Finland and Germany and is not shared with third parties. That is GoatCounter's own description of its service; we cannot inspect its servers.</p>
+<p>If your browser sends a "Do Not Track" or "Global Privacy Control" signal, our script sends nothing. A content blocker that blocks goatcounter.com also stops the count, and the tools work the same without it.</p>
+<p>We also see how often our pages appear in Google Search and how often they are clicked there, through Google Search Console. Those are totals; they do not identify anyone.</p>
 
 <h2>If you email us</h2>
 <p>Some pages have a link to email us, for example to be told when a fuller version of a tool is ready. If you write to us, we receive your email address and what you wrote, in our mailbox at Google Workspace. We use your address only to answer you or to send the one message you asked for. We do not add you to a mailing list, and we do not sell or share your address. To have your message and address deleted, email <a href="mailto:hello@rocavo.com">hello@rocavo.com</a>.</p>
 
 <h2>Changes</h2>
-<p>If we start measuring visits to these pages in any other way, this note will say so before it starts.</p>
-<p class="muted">Last updated: November 19, 2026. Questions: <a href="mailto:hello@rocavo.com">hello@rocavo.com</a>.</p>
+<p>If we start measuring visits to these pages in any other way, this note will say so before it starts. On November 20, 2026 we added the count described above, in the same update as this note.</p>
+<p class="muted">Last updated: November 20, 2026. Questions: <a href="mailto:hello@rocavo.com">hello@rocavo.com</a>.</p>
 </main>
 <footer class="site">
   <p>Published by Rocavo Inc., 175 Baypointe Parkway, San Jose, CA. Contact: <a href="mailto:hello@rocavo.com">hello@rocavo.com</a>. <a href="privacy.html">Privacy note</a>.</p>
 </footer>
+<script src="count.js"></script>
 </body>
 </html>
